@@ -1,12 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import Options from './components/Options';
-import { getSchoolLessons, prepareChartDat } from './matrics.service';
-import { ChartLabels } from './constants';
-import { Data } from './data.model';
-import Loader from './components/Loader/Loader';
-import {  setAppState } from "./redux/reducers";
+import { Data, SchoolRecord } from './data.interface';
+import Loader from './uiComponents/Loader/Loader';
+import { setAppState } from "./redux/reducers";
 import { Results } from './components/Results';
 
 
@@ -22,18 +20,10 @@ const App = () => {
   const [country, setCountry] =  useState('');
   const [camp, setCamp] =  useState('');
 
-interface SchoolRecord {
-  id: string;
-  school: string;
-  camp: string;
-  country: string
-  lessons: number
-  month: string
-}
 const intializeAppState = (data: SchoolRecord[]) => {
     // intiate appData
     data.map(obj => { 
-      const {country, camp, school} = obj
+      const {country, camp, school} = obj;
       analysisData[country] = analysisData[country] || {};
       if(analysisData[country][camp]){
         return analysisData[country][camp] = {...analysisData[country][camp],[obj.school]: {...analysisData[country][camp][school],
@@ -49,7 +39,6 @@ const intializeAppState = (data: SchoolRecord[]) => {
     setAppData(analysisData);
     let country = Object.keys(analysisData)[0];
     let camp = Object.keys(analysisData[country])[0];
-    let schools = Object.keys(analysisData[country][camp]);
     setCountry(country);
     setCamp(camp);
     setIsLoading(false);
@@ -65,15 +54,13 @@ useEffect(() => {
   return (
       <>
       {isLoading ? <Loader />:  
-      <div style={{padding: '25px',  backgroundColor: '#eee', height:'100vh' }} >
-        <div className='Header'>
-          <h1>Analysis Chart</h1>
+      <div style={{padding: '25px',  backgroundColor: '#F5F6FA', height:'100vh' }} >
+        <div style={{color: '#8E63AC'}}>
+          <h1 style={{fontWeight: 'lighter'}}>Analysis Chart</h1>
           <p>Number of lessons</p>
         </div>
         <div >
           <Options />
-        </div>
-        <div >
           <Results />
         </div>
         

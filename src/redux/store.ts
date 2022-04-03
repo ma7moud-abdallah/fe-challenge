@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
-import analysisReducer from "./reducers";
+import dashboardReducer from "./reducers";
 
 export default configureStore({
-  reducer: { analysis: analysisReducer },
+  reducer: { data: dashboardReducer },
 });

@@ -1,6 +1,5 @@
 import React from 'react'
-import { getSchoolLessons } from '../matrics.service';
-import Card from './Card/Card';
+import Card from '../uiComponents/Card/Card';
 
 
 const School = (props:any) => {

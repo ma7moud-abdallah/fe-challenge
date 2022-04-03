@@ -1,7 +1,7 @@
 
 import { createSlice } from "@reduxjs/toolkit";
 import { allSchools } from "../constants";
-import { Data } from "../data.model";
+import { Data } from "../data.interface";
 import { fillState } from "./service";
 
 const initialState: any = {

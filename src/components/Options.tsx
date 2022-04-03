@@ -1,16 +1,17 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { setCountry, setCamp, setSchool } from '../redux/reducers';
 
 import 'react-dropdown/style.css';
-import { Dropdown } from './Dropdown';
+import { Dropdown } from '../uiComponents/Dropdown/Dropdown';
 import { allSchools } from '../constants';
 
-const  Options = (props: any) =>  {
-    const selectedFilter: any = useSelector((state) => state);
-    const {data,countries, camps, schools, country} = selectedFilter.analysis;
+const  Options = () =>  {
+    const dashboardData: any = useSelector((state) => state);
+    const {data, countries, camps, schools, country} = dashboardData.data;
     const dispatch = useDispatch();
-    // handle filters changes
+    
+
     const handleOnCountryChange = (newCountry: string) => {
       const camps = Object.keys(data[newCountry]);
       const schools =   Object.keys(data[newCountry][camps[0]]);

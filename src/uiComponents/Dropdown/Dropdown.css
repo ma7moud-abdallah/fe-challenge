@@ -1,0 +1,18 @@
+.dropDown {
+    margin-top: 20px;
+  }
+  
+  .dropDown label {
+    color: #C8C7CC;
+    font-size: 0.9rem;
+    margin-right: 5px;
+  }
+  
+  .dropDown select {
+    width: 14rem;
+    height: 2rem;
+    background: #8dd0fa;
+    padding: 0 0.5rem;
+    border: #76BFE4 1px solid;
+    border-radius: 5px;
+  }

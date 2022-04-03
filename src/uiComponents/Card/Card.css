@@ -1,0 +1,61 @@
+.Card {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 20px;
+    cursor: pointer;
+    font-size: 25px;
+}
+
+/* Hide the default checkbox */
+.Card input {
+    visibility: hidden;
+    cursor: pointer;
+  }
+  
+  /* Create a custom checkbox */
+  .Mark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    border-radius: 25px;
+    border-width: 2px;
+    border-color: black;
+    background-color: white;
+}
+  .Card:hover input ~ .Mark {
+    background-color: lightcyan;
+  }
+  
+  .Card input:checked ~ .Mark {
+    background-color: lightseagreen;
+  }
+
+  /* Create the Mark/indicator (hidden when not checked) */
+.Mark:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+
+  .Mark .round {
+    background: lightblue;
+    border: 1px solid fff;
+    width: 50%;
+    height: 50%;
+    display: block;
+    line-height: 100%;
+    text-align: center;
+    top: 22%;
+    border-radius: 50%;
+    left: 22%;
+    position: absolute;
+  }
+  
+  /* Show the Mark when checked */
+  .Card input:checked ~ .Mark:after {
+    display: block;
+  }
+  

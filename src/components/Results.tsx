@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { Line } from 'react-chartjs-2';
 
 import { useSelector } from 'react-redux';
-import { allSchools, ChartLabels } from '../constants';
+import { allSchools, ChartLabels } from '../common/constants';
 import { getAllLessons, getSchoolLessons, prepareChartDat } from '../matrics.service';
 import { Chart } from './charts.interface';
 import SchoolsList from './SchoolsList';
@@ -61,7 +61,7 @@ const updateChartsData = (isChecked: boolean = true,schoolName: string) => {
 
           <div style={{ flex: 1, padding: '10px' }}>
               <h4> {getAllLessons(data[country][camp])} Lessons <br /> in {camp}</h4>
-              <SchoolsList onCheckSchool={(isChecked: boolean, name: string) => updateChartsData(isChecked, name)} schools={school !== allSchools ? [school] : schools}  camp={data[country][camp]} />
+              <SchoolsList onCheckSchool={(isChecked: boolean, name: string) => updateChartsData(isChecked, name)} isAallSchools = {school !== allSchools} schools={school !== allSchools ? [school] : schools}  camp={data[country][camp]} />
 
           </div>
     </div>

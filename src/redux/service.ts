@@ -1,4 +1,4 @@
-import { Data } from "../data.interface";
+import { Data } from "../common/data.interface";
 
 export const fillState = (appData: Data) => {
     let countries = Object.keys(appData);

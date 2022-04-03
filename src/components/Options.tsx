@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { setCountry, setCamp, setSchool } from '../redux/reducers';
 
 import 'react-dropdown/style.css';
-import { Dropdown } from '../uiComponents/Dropdown/Dropdown';
-import { allSchools } from '../constants';
+import { Dropdown } from '../components/uiComponents/Dropdown/Dropdown';
+import { allSchools } from '../common/constants';
 
 const  Options = () =>  {
     const dashboardData: any = useSelector((state) => state);

@@ -20,7 +20,7 @@ export interface SchoolRecord {
   id: string;
   school: string;
   camp: string;
-  country: string
-  lessons: number
-  month: string
+  country: string;
+  lessons: number;
+  month: string;
 }

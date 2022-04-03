@@ -2,13 +2,10 @@ import React, { useEffect, useState } from 'react';
 import './App.css';
 import { useDispatch } from "react-redux";
 import Options from './components/Options';
-import { Data, SchoolRecord } from './data.interface';
-import Loader from './uiComponents/Loader/Loader';
+import { Data, SchoolRecord } from './common/data.interface';
+import Loader from './components/uiComponents/Loader/Loader';
 import { setAppState } from "./redux/reducers";
 import { Results } from './components/Results';
-
-
-
 
 const analysisData: Data = {};
 

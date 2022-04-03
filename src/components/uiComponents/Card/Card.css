@@ -5,6 +5,7 @@
     margin-bottom: 20px;
     cursor: pointer;
     font-size: 25px;
+    color: #E9EAEA;
 }
 
 /* Hide the default checkbox */
@@ -18,19 +19,23 @@
     position: absolute;
     top: 0;
     left: 0;
-    height: 25px;
-    width: 25px;
-    border-radius: 25px;
-    border-width: 4px;
-    border-color: darkcyan;
+    height: 20px;
+    width: 20px;
+    border-radius: 20px;
+    border: 2px solid #E9EAEA;
     background-color: white;
+}
+.card input ~ .check {
+ 
+  padding: 5x;
+  background-color: #fff;
 }
   .card:hover input ~ .check {
     background-color: lightcyan;
   }
   
   .card input:checked ~ .check {
-    background-color: lightseagreen;
+    border-color: #8DD0FA;
   }
 
   /* Create the Check/indicator (hidden when not checked) */
@@ -41,17 +46,25 @@
   }
 
   .check .circle {
-    background: lightblue;
-    border: 1px solid fff;
+    background: #fff;
     width: 50%;
     height: 50%;
     display: block;
     line-height: 100%;
     text-align: center;
-    top: 22%;
+    top: 20%;
     border-radius: 50%;
-    left: 22%;
+    left: 20%;
     position: absolute;
+    border: 1px solid #E9EAEA;
+  }
+
+  .card input:checked ~ .check .circle{
+    background-color: #8DD0FA;
+  }
+
+  .checkedCard {
+    color: #8DD0FA;
   }
   
   /* Show the check when checked */

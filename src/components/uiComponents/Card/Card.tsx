@@ -2,21 +2,21 @@ import React from 'react';
 import './Card.css'
 
 interface CardData {
-  title: string;
-  description: string;
+  school: string;
+  lessons: string;
   isSelected: boolean;
   onClick: any;
 }
 const Card = (props: CardData) => {
-const {title, description, isSelected, onClick } = props; 
+const {lessons, school, isSelected, onClick } = props; 
 
   return (
     <label className='card'>
-        <span>{title} <br /> {description}</span>
+        <span className={isSelected ? 'checkedCard' : ''}>{lessons} Lessons <br /> in  {school}</span>
         <input type="checkbox" onChange={onClick} checked={isSelected} />
-        <span className='check'>
-          <span className='circle'></span>
-        </span>
+        <div className='check'>
+          <div className='circle'></div>
+        </div>
     </label>
   )
 }

@@ -59,8 +59,8 @@ const updateChartsData = (isChecked: boolean = true,schoolName: string) => {
               {chartsData.datasets && <Line ref={chartRef} options={{ onClick: function(evt, element) {console.log(element, chartRef.current, evt)}}}  data={chartsData} />}
           </div>
 
-          <div style={{ flex: 1, padding: '10px' }}>
-              <h4> {getAllLessons(data[country][camp])} Lessons <br /> in {camp}</h4>
+          <div style={{ flex: 1, padding: '10px', paddingLeft: '30px' }}>
+              <h3> {getAllLessons(data[country][camp])} Lessons <br /> in {camp}</h3>
               <SchoolsList onCheckSchool={(isChecked: boolean, name: string) => updateChartsData(isChecked, name)} isAallSchools = {school !== allSchools} schools={school !== allSchools ? [school] : schools}  camp={data[country][camp]} />
 
           </div>

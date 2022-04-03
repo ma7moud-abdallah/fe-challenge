@@ -1,8 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './App.css';
-import dataJson from './data.json';
-import { Provider } from 'react-redux'
-
+import { useDispatch, useSelector } from "react-redux";
 import { Line  } from 'react-chartjs-2';
 import  getDatasetAtEvent   from 'react-chartjs-2';
 import Options from './components/Options';
@@ -10,9 +8,9 @@ import { getAllLessons, getSchoolLessons, prepareChartDat } from './matrics.serv
 import School from './components/School';
 import { ChartLabels } from './constants';
 import SchoolsList from './components/SchoolsList';
-import store from './redux/store';
 import { Data } from './data.model';
 import Loader from './components/Loader/Loader';
+import {  setData, setCamp, setCountry, setSchool } from "./redux/reducers";
 
 
 
@@ -21,7 +19,10 @@ const analysisData: Data = {};
 
 // app start 
 const App = () => {
+  const selectedFilter: any = useSelector(state => state);
+  const dispatch = useDispatch();
   const chartRef = useRef();
+  const [appData, setAppData] =  useState<Data>({});
   const [countries, setCountries] =  useState(['']);
   const [isLoading, setIsLoading] =  useState(true);
   const [camps, setCamps] =  useState(['']);
@@ -40,13 +41,19 @@ const App = () => {
   });
   // handle filters changes
   const handleOnCountryChange = (newCountry: string) => {
+    console.log(newCountry)
      setCountry(newCountry);
-     setCamp(Object.keys(analysisData[newCountry])[0]);
+     let camp = Object.keys(appData[newCountry])[0];
+     setCamp(camp);
+     let schools = ["All Schools", ...Object.keys(appData[country][camp])]
+    setschools(schools);
      setschool("All Schools");
      resetChart();
   } 
    const handleOnCampChange = (newCamp: string) => {
     setCamp(newCamp);
+    let schools = ["All Schools", ...Object.keys(appData[country][newCamp])]
+    setschools(schools);
     setschool("All Schools");
     resetChart();
  } 
@@ -77,7 +84,7 @@ const updateChartsData = (isChecked: boolean = true,schoolName: string) => {
     const data = chartsData.datasets.filter(data => data.label !== schoolName)
     return setChartsData({...chartsData, datasets:  data})
   }
-  let chartdata: any = prepareChartDat(getSchoolLessons(analysisData[country][camp][schoolName])[1]);
+  let chartdata: any = prepareChartDat(getSchoolLessons(appData[country][camp][schoolName])[1]);
   let chart = 
     {
         label:schoolName,
@@ -111,18 +118,23 @@ const intializeAppState = (data: SchoolRecord[]) => {
       }}
 
     })
-    setCountry(Object.keys(analysisData)[0]);
-    setCamp(Object.keys(analysisData[country])[0]);
+    /*dispatch(setData(analysisData));
+    console.log(appData)*/
+    setAppData(analysisData);
+    let country = Object.keys(analysisData)[0];
+    let camp = Object.keys(analysisData[country])[0];
+    let schools = Object.keys(analysisData[country][camp]);
+    setCountry(country);
+    setCamp(camp);
     resetChart();
-    setschools(['All Schools', ...Object.keys(analysisData[country][camp])]);
+    setschools(['All Schools', ...schools]);
     setschool('All Schools');
     setIsLoading(false);
 }
-const handleChartClick = (e: any) => {
+/*const handleChartClick = (e: any) => {
    console.log(e.target.value, chartRef.current)
-}
-
-
+}*/
+//onsole.log(selectedFilter)
 
 useEffect(() => {
     fetch("https://raw.githubusercontent.com/abdelrhman-arnos/analysis-fe-challenge/master/data.json")
@@ -130,11 +142,8 @@ useEffect(() => {
     .then(data => intializeAppState(data));
 },[])
 
-useEffect(() => {
-  console.log(analysisData[country][camp])
-}, [camp, country])
   return (
-    <Provider store={store}>
+      <>
       {isLoading ? <Loader />:  
       <div style={{padding: '25px',  backgroundColor: '#eee', height:'100vh' }} >
         <div className='Header'>
@@ -143,25 +152,25 @@ useEffect(() => {
         </div>
         
         <div style={{display: 'flex', flex: 1, flexDirection:'row', justifyContent: 'space-between', alignItems: 'center'}}>
-          <Options onChange = {(newCountry: string) => handleOnCountryChange(newCountry)} options={Object.keys(analysisData)} />
-          <Options onChange = {(newCamp: string) => handleOnCampChange(newCamp)} options={Object.keys(analysisData[country])} />
+          <Options onChange = {(newCountry: string) => handleOnCountryChange(newCountry)} options={Object.keys(appData)} />
+          <Options onChange = {(newCamp: string) => handleOnCampChange(newCamp)} options={Object.keys(appData[country])} />
           <Options onChange = {(newSchool: string) => handleOnSchoolChange(newSchool)}  options={schools} />
         </div>
         <div style={{backgroundColor: '#fff', marginTop: 15, padding: 10, display: 'flex', minHeight: 500}}>
           <div style={{flex: 2}}>
-            {chartsData.datasets && <Line ref={chartRef} onClick = {(e) => handleChartClick(e)} data= {chartsData}/>}
+            {chartsData.datasets && <Line ref={chartRef} data= {chartsData}/>}
           </div>
         
         <div style={{flex: 1}}> 
-            <h4> {getAllLessons(analysisData[country][camp])} Lessions <br /> in {camp}</h4>
-            <SchoolsList onCheckSchool = {(isChecked: boolean,name: string) => updateChartsData(isChecked, name)} schools = { school !== "All Schools" ? [school] : Object.keys(analysisData[country][camp])} camp = {analysisData[country][camp]} /> 
+            <h4> {getAllLessons(appData[country][camp])} Lessions <br /> in {camp}</h4>
+            <SchoolsList onCheckSchool = {(isChecked: boolean,name: string) => updateChartsData(isChecked, name)} schools = { school !== "All Schools" ? [school] : Object.keys(appData[country][camp])} camp = {appData[country][camp]} /> 
 
         </div>
         </div>
         
       </div>
      }
-      </Provider>
+     </>
   );
 }
 

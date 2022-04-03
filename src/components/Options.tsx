@@ -1,11 +1,11 @@
 import React from 'react';
-import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
+import { Dropdown } from './Dropdown';
 
 const  Options = (props: any) =>  {
     return (
         <div>
-         <Dropdown options={props.options} onChange={(option) => props.onChange(option.value)} value={props.options[0]} placeholder="Select an option" />  
+         <Dropdown options={props.options} onChange={(option: string) => props.onChange(option)} value={props.options[0]} placeholder="Select an option" />  
         </div>
     )
 }

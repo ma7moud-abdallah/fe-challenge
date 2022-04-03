@@ -12,6 +12,11 @@ export const counterSlice = createSlice({
   name: "dashboardPage",
   initialState,
   reducers: {
+    setData: (state, action) => {
+      const payload = action.payload;
+      console.log('from rr', payload)
+      state.data = payload;
+    },
     setCountry: (state, action) => {
       const payload = action.payload;
       state.country = payload;
@@ -28,7 +33,6 @@ export const counterSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { setCamp, setCountry, setSchool } =
-  counterSlice.actions;
+export const { setData, setCamp, setCountry, setSchool } = counterSlice.actions;
 
 export default counterSlice.reducer;

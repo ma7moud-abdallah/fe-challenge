@@ -39,3 +39,5 @@ dataJson.map(obj => {
     }}
 
   })
+
+  export const allSchools = "All Schools";

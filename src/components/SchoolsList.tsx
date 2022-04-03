@@ -7,7 +7,6 @@ const SchoolsList = (props: any) => {
   const {schools, camp} = props
   return (
     <div>
-        
         { schools &&   schools.map((school: string) => (
           <div key={school}>
               <School  onClick = {(isChecked: boolean, name: string) => props.onCheckSchool(isChecked,name)}  school={school} Lessons = {getSchoolLessons(camp[school])[0]}/>          

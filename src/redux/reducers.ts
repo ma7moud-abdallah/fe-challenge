@@ -1,29 +1,47 @@
 
 import { createSlice } from "@reduxjs/toolkit";
+import { allSchools } from "../constants";
+import { Data } from "../data.model";
+import { fillState } from "./service";
 
 const initialState: any = {
-  data: {},
+  countries: [],
+  camps: [],
+  schools: [],
   camp: "",
   country: "",
   school: "",
+  data: {}
 };
 
 export const counterSlice = createSlice({
   name: "dashboardPage",
   initialState,
   reducers: {
-    setData: (state, action) => {
+    setAppState: (state, action) => {
       const payload = action.payload;
-      console.log('from rr', payload)
-      state.data = payload;
+      const data = fillState(payload);
+      state.country = data.country;
+      state.countries = data.countries;
+      state.camp = data.camp;
+      state.camps = data.camps;
+      state.schools = data.schools;
+      state.data = data.data;
+      state.school = allSchools;
     },
     setCountry: (state, action) => {
-      const payload = action.payload;
-      state.country = payload;
+      const {newCountry, camps, schools} = action.payload;
+      state.country = newCountry;
+      state.camps = camps;
+      state.camp = camps[0];
+      state.schools = schools;
+      state.school = allSchools;
     },
     setCamp: (state, action) => {
-      const payload = action.payload;
-      state.camp = payload;
+      const {newCamp, schools} = action.payload;
+      state.camp = newCamp;
+      state.schools = schools;
+      state.school = allSchools;
     },
     setSchool: (state, action) => {
       const payload = action.payload;
@@ -32,7 +50,8 @@ export const counterSlice = createSlice({
   },
 });
 
+
 // Action creators are generated for each case reducer function
-export const { setData, setCamp, setCountry, setSchool } = counterSlice.actions;
+export const { setAppState, setCamp, setCountry, setSchool } = counterSlice.actions;
 
 export default counterSlice.reducer;

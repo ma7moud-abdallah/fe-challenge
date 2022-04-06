@@ -1,62 +1,57 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { Line } from 'react-chartjs-2';
-
-import { useSelector } from 'react-redux';
-import { allSchools, ChartLabels } from '../common/constants';
-import { getAllLessons, getSchoolLessons, prepareChartDat } from '../matrics.service';
-import { Chart } from './charts.interface';
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import { allSchools } from '../common/constants';
+import { getAllLessons, getSchoolLessons } from '../matrics.service';
 import SchoolsList from './SchoolsList';
+import ChartView from './ChartView';
+import { updateCharData, resetChart } from '../redux/reducers';
 
 export const Results = () => {
     const dashboardData: any = useSelector((state) => state);
-    const {data, camp, schools, school, country} = dashboardData.data;
-    const [chartsData, setChartsData] =  useState(new Chart(ChartLabels));
-
-    const chartRef = useRef()
-
-useEffect(() => {
-    // reset chart  
-    setChartsData(new Chart(ChartLabels));
-}, [country,camp]);
+    const {data, camp, schools, school, country, activeSchools, chartData} = dashboardData.data;
+    const dispatch = useDispatch();
 
 useEffect(() => {
   if (school === allSchools) return;
-  let chartdata: any = prepareChartDat(getSchoolLessons(data[country][camp][school])[1]);
+  let chartsdata: any = getSchoolLessons(data[country][camp][school])[1];
   let chart = 
     {
         label:school,
-        backgroundColor: chartdata.color,
-        borderColor: chartdata.color,
-        data: chartdata.data
+        backgroundColor: chartsdata.color,
+        borderColor: chartsdata.color,
+        data: chartsdata.data,
+        ids: chartsdata.ids
       
     }
-    setChartsData({...chartsData, datasets: [chart]})
+    dispatch(updateCharData([chart]))
 }, [school]);
+
 
 const updateChartsData = (isChecked: boolean = true,schoolName: string) => {
     if(!isChecked) {
-      const data = chartsData.datasets.filter(data => data.label !== schoolName)
-      if(!data.length) return setChartsData(new Chart(ChartLabels)); 
-      return setChartsData({...chartsData, datasets:  data})
+      const data = chartData.datasets.filter((data: any) => data.label !== schoolName)
+      if(!data.length) return dispatch(resetChart({})); 
+      return dispatch(updateCharData(data))
     }
-    let chartdata: any = prepareChartDat(getSchoolLessons(data[country][camp][schoolName])[1]);
+    let chartsdata: any = getSchoolLessons(data[country][camp][schoolName])[1];
     let chart = 
       {
+          ids: chartsdata.ids,
           label:schoolName,
-          backgroundColor: chartdata.color,
-          borderColor: chartdata.color,
-          data: chartdata.data
+          backgroundColor: chartsdata.color,
+          borderColor: chartsdata.color,
+          data: chartsdata.data
         
       }
-      setChartsData({...chartsData, datasets: [...chartsData.datasets , chart]})
+      const allData = JSON.parse(JSON.stringify(chartData.datasets));
+      allData.push(chart)
+      dispatch(updateCharData(allData))
   }
-
-
   
   return (
     <div style={{backgroundColor: '#fff', marginTop: 15, padding: 10, display: 'flex', minHeight: 500}}>
           <div style={{ flex: 2, borderRight: '1px solid #eee' }}>
-              {chartsData.datasets && <Line ref={chartRef} options={{ onClick: function(evt, element) {console.log(element, chartRef.current, evt)}}}  data={chartsData} />}
+              <ChartView  />
           </div>
 
           <div style={{ flex: 1, padding: '10px', paddingLeft: '30px' }}>

@@ -6,25 +6,27 @@ export const getAllLessons = (schools: any) => {
    return tootalLessons;
 }
 
-export const getSchoolLessons = (school: any) => {
-    let chartsData:any = {data: []}
+export const getSchoolLessons = (school: any) => { 
+   const sortedSchools = sortSchoolRecords(school);
+   let ids = Array.from(Array(12), () => 0);
+   let data = Array.from(Array(12), () => 0);
+    let chartsData:any = {data: [], ids: [], labels: []}
     let tootalLessons = 0;
-       for(let lesson in school) {
-          chartsData.color = school[lesson].color
-          tootalLessons += school[lesson].lessons
-          chartsData.data.push([[school[lesson].month], school[lesson].lessons])
+       for(let lesson of sortedSchools) {
+         const index = Mounths[lesson.month] - 1
+          chartsData.color = lesson.color;
+          tootalLessons += lesson.lessons;
+          ids[index] = lesson.id; 
+          data[index] = lesson.lessons;
        }
+      chartsData.ids = ids;
+      chartsData.data = data;
     return [tootalLessons, chartsData];
  }
 
- export const prepareChartDat: any = (chartData: any): any => {
-      const sortedArray = chartData.data.sort(function(a: any,b: any)  {  
-        return Mounths[a[0]] - Mounths[b[0]];
-      })
-      chartData.data = chartData.data.map((el:any) => el[1]);
-      return chartData
+ const sortSchoolRecords = (arr: any) => {
+     return arr.slice().sort((a: any, b: any) => Mounths[a.month] - Mounths[b.month])
  }
-
  let Mounths: any = {
         'Jan': 1,
         'Feb': 2,

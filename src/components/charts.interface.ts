@@ -5,6 +5,7 @@ export class Chart {
         backgroundColor: string;
         borderColor: string;
         data: number[];
+        ids: any[];
     }[];
     constructor(labels: string[] = ['']) {
     this.labels = labels
@@ -12,7 +13,8 @@ export class Chart {
         label : "",
         backgroundColor : "#fff",
         borderColor : "#fff",
-        data: []
+        data: [],
+        ids: []
     }]
     }
 }

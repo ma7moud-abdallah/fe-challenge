@@ -1,7 +1,7 @@
 
 import { createSlice } from "@reduxjs/toolkit";
-import { allSchools } from "../common/constants";
-import { Data } from "../common/data.interface";
+import { allSchools, ChartLabels } from "../common/constants";
+import { Chart } from "../components/charts.interface";
 import { fillState } from "./service";
 
 const initialState: any = {
@@ -11,7 +11,9 @@ const initialState: any = {
   camp: "",
   country: "",
   school: "",
-  data: {}
+  data: {},
+  activeSchools: [],
+  chartData: new Chart(ChartLabels)
 };
 
 export const counterSlice = createSlice({
@@ -47,11 +49,35 @@ export const counterSlice = createSlice({
       const payload = action.payload;
       state.school = payload;
     },
+    resetActiveSchools: (state, action) => {
+      state.activeSchools = [];
+    },
+    updateActiveSchool: (state, action) => {
+      const payload = action.payload;
+      let schools = state.activeSchools;
+      state.activeSchools = [...schools, payload];
+    },
+    addeActiveSchool: (state, action) => {
+      const payload = action.payload;
+      state.activeSchools = [payload];
+    },
+    removeActiveSchool: (state, action) => {
+      const payload = action.payload;
+      let schools = state.activeSchools.filter((school: string) => school !== payload);
+      state.activeSchools = [...schools];
+    },
+    resetChart: (state, action) => {
+      state.chartData = new Chart(ChartLabels);
+    },
+    updateCharData: (state, action) => {
+      const payload = action.payload;
+      state.chartData = {...state.chartData, datasets: payload};
+    }
   },
 });
 
 
 // Action creators are generated for each case reducer function
-export const { setAppState, setCamp, setCountry, setSchool } = counterSlice.actions;
+export const { setAppState, setCamp, setCountry, setSchool, updateActiveSchool, removeActiveSchool, resetActiveSchools, resetChart, updateCharData, addeActiveSchool } = counterSlice.actions;
 
 export default counterSlice.reducer;

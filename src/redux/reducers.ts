@@ -47,6 +47,7 @@ export const counterSlice = createSlice({
     },
     setSchool: (state, action) => {
       const payload = action.payload;
+      state.activeSchools = payload !== allSchools ? [payload] : state.activeSchools;
       state.school = payload;
     },
     resetActiveSchools: (state, action) => {

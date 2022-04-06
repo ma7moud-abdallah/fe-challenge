@@ -1,6 +1,5 @@
-import React from 'react'
-import { JsxElement } from 'typescript'
-import { getSchoolLessons } from '../matrics.service'
+import React from 'react';
+import { getSchoolLessons } from './school.service'
 import School from './School'
 
 const SchoolsList = (props: any) => {

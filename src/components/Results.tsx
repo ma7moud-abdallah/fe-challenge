@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { allSchools } from '../common/constants';
-import { getAllLessons, getSchoolLessons } from '../matrics.service';
+import { getAllLessons, getSchoolLessons } from './school.service';
 import SchoolsList from './SchoolsList';
 import ChartView from './ChartView';
 import { updateCharData, resetChart } from '../redux/reducers';

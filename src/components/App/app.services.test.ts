@@ -1,4 +1,6 @@
-import { intializeApp } from "./app.service"
+import { Data } from "../../common/data.interface";
+import { intializeApp } from "./app.service";
+let appData: Data = {};
 const data = [
 	{
 		"id": "620af3a468e4b2e765e7c9e7",
@@ -56,8 +58,30 @@ const data = [
 		"school": "Burke High School",
 		"lessons": 115
 	}]
-test('intializeApp', () => {
+	beforeAll(() => {
+		 appData = intializeApp(data);
+	})
+describe('intializeApp' , () => {
+	it('should get the right countries from backend with now repeated countruies', () => {
+		const countriesSet = new Set();
+		const coutries = Object.keys(appData);
+        coutries.map(country => countriesSet.add(country));
+		expect(coutries.length).toEqual(4);
+		expect(coutries.length).toEqual(countriesSet.size);
 
-    const l = intializeApp(data)
-    expect(Object.keys(l).length).toEqual(4)
+	})
+	it('should get all camps per each country', () => {
+		const country = 'Egypt';
+		const camps = Object.keys(appData[country]);
+		expect(camps.includes('Kakuma')).toBeTruthy;
+		expect(camps.includes('Omaka')).toBeTruthy;
+	})
+	it('should get all schools per each camp in country', () => {
+		const country = 'Egypt';
+		let camp = 'Omaka'
+		const schools = Object.keys(appData[country][camp]);
+		expect(schools.includes('Burke High School')).toBeTruthy;
+		expect(schools.includes('Te Kupenga Preschool')).toBeFalsy;
+	})
+
 })

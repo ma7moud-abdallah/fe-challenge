@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from "react-redux";
-import { Data, SchoolRecord } from '../common/data.interface';
-import Loader from '../components/uiComponents/Loader/Loader';
-import { setAppState } from "../redux/reducers";
+import { Data, SchoolRecord } from '../../common/data.interface';
+import Loader from '../uiComponents/Loader/Loader';
+import { setAppState } from "../../redux/reducers";
 import { Routes, Route } from "react-router-dom";
-import Dashboard from '../pages/Dashboard';
-import Details from '../pages/Details';
+import Dashboard from '../../pages/Dashboard';
+import Details from '../../pages/Details';
 import { intializeApp } from './app.service';
 
 let analysisData: Data = {};
@@ -26,7 +26,9 @@ const intializeAppState = (data: SchoolRecord[]) => {
 useEffect(() => {
     fetch("https://raw.githubusercontent.com/abdelrhman-arnos/analysis-fe-challenge/master/data.json")
     .then(response => response.json())
-    .then(data => intializeAppState(data));
+    .then(data => {
+      intializeAppState(data)
+    });
 },[])
 
   return (
@@ -35,7 +37,7 @@ useEffect(() => {
       <h1 style={{fontWeight: 'lighter'}}>Analysis Chart</h1>
       <p>Number of lessons</p>
     </div>
-    {isLoading ? <Loader /> : <Routes>
+    {isLoading ? <Loader  /> : <Routes>
       <Route path="/" element={<Dashboard /> } />
       <Route path="/details" element={<Details />} />
       </Routes> }

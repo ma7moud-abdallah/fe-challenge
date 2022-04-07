@@ -13,8 +13,8 @@ const ChartView = () => {
      
     if(!element.length) return;
     const {datasetIndex, index} = element[0];
-    if(index === 0) return;
     const {ids, label} = evt?.chart?._metasets[datasetIndex]?._dataset;
+    if(ids[index] === 0) return;
     navigate('/details', {state: {id: ids[index], country, camp, school: label}})
     
   }

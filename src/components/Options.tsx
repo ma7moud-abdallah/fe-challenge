@@ -29,10 +29,10 @@ const  Options = () =>  {
         dispatch(updateActiveSchool(newSchool));
     }
     return (
-        <div style={{display: 'flex', justifyContent: 'space-between'}}>
-         <Dropdown label={"Select Country"} options={countries} onChange={(option: string) => handleOnCountryChange(option)} value= {country}  placeholder="Select an option" />
-         <Dropdown label="Select Camp" options={camps} onChange={(option: string) => handleOnCampChange(option)} value = {camp}  placeholder="Select an option" />
-         <Dropdown label="Select School" options={[allSchools ,...schools]} onChange={(option: string) => handleOnSchoolChange(option)} value= {school || allSchools}  placeholder="Select an option" /> 
+        <div data-testid='options' style={{display: 'flex', justifyContent: 'space-between'}}>
+         <Dropdown testId = 'selectCountry' label={"Select Country"} options={countries} onChange={(option: string) => handleOnCountryChange(option)} value= {country}  placeholder="Select an option" />
+         <Dropdown testId = 'selectCamp' label="Select Camp" options={camps} onChange={(option: string) => handleOnCampChange(option)} value = {camp}  placeholder="Select an option" />
+         <Dropdown testId = 'selectSchool' label="Select School" options={[allSchools ,...schools]} onChange={(option: string) => handleOnSchoolChange(option)} value= {school || allSchools}  placeholder="Select an option" /> 
         </div>
     )
 }

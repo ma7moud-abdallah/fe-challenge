@@ -3,3 +3,6 @@
 // expect(element).toHaveTextContent(/react/i)
 // learn more: https://github.com/testing-library/jest-dom
 import '@testing-library/jest-dom';
+jest.spyOn(window, "fetch").mockImplementation( jest.fn(() => Promise.resolve({ json: () => Promise.resolve({ data: 100 }), }), ) as jest.Mock )
+
+

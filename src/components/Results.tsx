@@ -49,9 +49,9 @@ const updateChartsData = (isChecked: boolean = true,schoolName: string) => {
   }
   
   return (
-    <div style={{backgroundColor: '#fff', marginTop: 15, padding: 10, display: 'flex', minHeight: 500}}>
+    <div data-testid='result'  style={{backgroundColor: '#fff', marginTop: 15, padding: 10, display: 'flex', minHeight: 500}}>
           <div style={{ flex: 2, borderRight: '1px solid #eee' }}>
-              <ChartView  />
+             <ChartView  />
           </div>
 
           <div style={{ flex: 1, padding: '10px', paddingLeft: '30px' }}>
